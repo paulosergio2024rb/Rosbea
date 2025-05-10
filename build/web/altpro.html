@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Alterar Dados do Produto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <style>
+            :root {
+                --primary-color: #1976d2;
+                --secondary-color: #0d47a1;
+                --accent-color: #4fc3f7;
+                --warning-color: #ff9800;
+                --light-gray: #f5f5f5;
+                --medium-gray: #e0e0e0;
+                --dark-gray: #757575;
+            }
+            
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            
+            body {
+                font-family: 'Roboto', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f9f9f9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
+            
+            .edit-container {
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                padding: 30px;
+                width: 100%;
+                max-width: 500px;
+                text-align: center;
+            }
+            
+            .edit-header {
+                margin-bottom: 25px;
+            }
+            
+            .edit-header h1 {
+                color: var(--primary-color);
+                font-size: 1.8rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .edit-header p {
+                color: var(--dark-gray);
+                margin-top: 10px;
+            }
+            
+            .edit-form {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .form-group {
+                text-align: left;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: var(--secondary-color);
+            }
+            
+            .form-group input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid var(--medium-gray);
+                border-radius: 4px;
+                font-size: 1rem;
+                transition: all 0.3s;
+            }
+            
+            .form-group input:focus {
+                outline: none;
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+            }
+            
+            .btn-search {
+                background-color: var(--primary-color);
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                font-size: 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.3s;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 10px;
+            }
+            
+            .btn-search:hover {
+                background-color: var(--secondary-color);
+                transform: translateY(-2px);
+                box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+            }
+            
+            .info-message {
+                background-color: #e3f2fd;
+                border-left: 4px solid var(--primary-color);
+                padding: 15px;
+                margin-bottom: 20px;
+                text-align: left;
+                border-radius: 0 4px 4px 0;
+            }
+            
+            @media (max-width: 480px) {
+                .edit-container {
+                    padding: 20px;
+                }
+                
+                .edit-header h1 {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="edit-container">
+            <div class="edit-header">
+                <h1><i class="fas fa-edit"></i> Alterar Dados do Produto</h1>
+                <p>Digite o código do produto que deseja alterar</p>
+            </div>
+            
+            <div class="info-message">
+                <i class="fas fa-info-circle" style="color: var(--primary-color); margin-right: 5px;"></i>
+                Informe o código do produto para carregar os dados atuais e iniciar a edição.
+            </div>
+            
+            <form method="get" action="carregaprod.jsp" class="edit-form">
+                <div class="form-group">
+                    <label for="cod">Código do Produto:</label>
+                    <input id="cod" type="number" name="codigo" required>
+                </div>
+                
+                <button type="submit" class="btn-search">
+                    <i class="fas fa-search"></i> Buscar Produto
+                </button>
+            </form>
+        </div>
+    </body>
+</html>

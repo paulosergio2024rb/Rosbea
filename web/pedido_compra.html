@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pedido de Compra</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="configura.css" type="text/css"/>
+
+    <script>
+        $(document).ready(function() {
+            $("#nomeCliente").autocomplete({
+                source: 'buscar_fornecedor.jsp',
+                minLength: 2,
+                select: function(event, ui) {
+                    $("#clienteId").val(ui.item.id);
+                }
+            });
+
+            $("#nomeProduto").autocomplete({
+                source: 'buscar_produtos.jsp',
+                minLength: 2,
+                select: function(event, ui) {
+                    // Aqui você pode preencher outros campos do produto se necessário
+                }
+            });
+
+            $("#adicionarItem").click(function() {
+                var novoItem = `
+                    <div>
+                        <input type="text" name="produtoNome[]" class="nomeProdutoAutocomplete" placeholder="Nome do Produto">
+                        <input type="number" name="qtdeEntrada[]" placeholder="Quantidade">
+                        <input type="number" name="precoDolar[]" placeholder="Preço em Dólar">
+                        <input type="number" name="precoDolarReal[]" placeholder="Preço em Real">
+                        <input type="number" name="totalEntrada[]" placeholder="Total">
+                        <button type="button" class="removerItem">Remover</button>
+                    </div>
+                `;
+                $("#itensPedido").append(novoItem);
+
+                $(".nomeProdutoAutocomplete").autocomplete({
+                    source: 'buscar_produtos.jsp',
+                    minLength: 2
+                });
+            });
+
+            $("#itensPedido").on('click', '.removerItem', function() {
+                $(this).parent().remove();
+            });
+
+            $("#itensPedido").on('input', 'input[name^="qtdeEntrada"], input[name^="precoDolarReal"]', function() {
+                var linha = $(this).parent();
+                var quantidade = parseFloat(linha.find('input[name^="qtdeEntrada"]').val()) || 0;
+                var precoReal = parseFloat(linha.find('input[name^="precoDolarReal"]').val()) || 0;
+                linha.find('input[name^="totalEntrada"]').val((quantidade * precoReal).toFixed(2));
+            });
+
+            // Prevenir a submissão do formulário ao pressionar Enter nos campos de texto
+            $('input[type="text"]').keypress(function(event) {
+                if (event.which == 13) { // Código da tecla Enter
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        form > div {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        form label {
+            display: inline-block;
+            width: 150px;
+            text-align: right;
+            margin-right: 10px;
+            color: #555;
+        }
+
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="number"],
+        form textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-grow: 1;
+        }
+
+        form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        form input[type="checkbox"] {
+            margin-left: 150px;
+        }
+
+        h2 {
+            margin-top: 25px;
+        }
+
+        #itensPedido {
+            display: flex;
+            flex-direction: column; /* Garante que os itens fiquem em coluna */
+            gap: 10px; /* Espaçamento entre os itens */
+        }
+
+        #itensPedido > div {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        #itensPedido > div > input[type="text"],
+        #itensPedido > div > input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-grow: 1;
+            max-width: 150px; /* Ajuste conforme necessário */
+        }
+
+        #itensPedido > div > button.removerItem {
+            padding: 8px 12px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #itensPedido > div > button.removerItem:hover {
+            background-color: #d32f2f;
+        }
+
+        button#adicionarItem,
+        button[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        button#adicionarItem:hover,
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #adicionarItem {
+            margin-right: 10px;
+        }
+
+        .nomeProdutoAutocomplete {
+            /* Estilos específicos para os campos de autocomplete de produto, se necessário */
+        }
+    </style>
+</head>
+<body>
+    <h1>Novo Pedido de Compra</h1>
+    <form action="gravar_pedido.jsp" method="post">
+        <div>
+            <label for="nomeCliente">Nome do Cliente:</label>
+            <input type="text" id="nomeCliente" name="nomeCliente">
+            <input type="hidden" id="clienteId" name="clienteId">
+        </div>
+        <div>
+            <label for="dataPedido">Data do Pedido:</label>
+            <input type="date" id="dataPedido" name="dataPedido" required>
+        </div>
+        <div>
+            <label for="mesAtual">Mês Atual:</label>
+            <input type="text" id="mesAtual" name="mesAtual">
+        </div>
+        <div>
+            <label for="observacoes">Observações:</label>
+            <textarea id="observacoes" name="observacoes"></textarea>
+        </div>
+        <div>
+            <label for="mostruario">Mostruário:</label>
+            <input type="checkbox" id="mostruario" name="mostruario" value="true">
+        </div>
+
+        <h2>Itens do Pedido</h2>
+        <div id="itensPedido">
+            <div>
+                <input type="number" name="qtdeEntrada[]" placeholder="Quantidade">
+                <input type="number" name="precoDolar[]" placeholder="Preço em Dólar">
+                <input type="number" name="precoDolarReal[]" placeholder="Preço em Real">
+                <input type="number" name="totalEntrada[]" placeholder="Total">
+            </div>
+        </div>
+        <button type="button" id="adicionarItem">Adicionar Item</button>
+
+        <button type="submit">Salvar Pedido</button>
+    </form>
+</body>
+</html>

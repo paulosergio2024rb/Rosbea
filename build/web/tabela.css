@@ -1,0 +1,33 @@
+table{
+    width: 80%;
+    background-color: background;
+    border: solid #ffffff 1px;
+    padding: 10px
+}
+* {
+    margin: 0 auto;
+}
+th{
+    background-color: black;
+    color: white;
+    text-align: left;
+    padding: 5px 10px
+}
+td{
+    border: solid #e6faff;
+    padding: 5px 10px
+}.spinner {
+
+}
+
+.item {
+
+}
+
+.user-list {
+
+}
+
+.fa-boxes {
+
+}

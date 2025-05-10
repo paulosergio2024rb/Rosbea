@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Fornecedor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para telas menores */
+        @media screen and (max-width: 600px) {
+            form {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Fornecedor</h1>
+    <form action="processa_fornecedor.jsp" method="post">
+        <div>
+            <label for="fornecedor">Fornecedor:</label>
+            <input type="text" id="fornecedor" name="fornecedor" required>
+        </div>
+        <br>
+        <div>
+            <label for="nome_real">Nome Real:</label>
+            <input type="text" id="nome_real" name="nome_real">
+        </div>
+        <br>
+        <div>
+            <label for="endereco">Endereco:</label>
+            <input type="text" id="endereco" name="endereco">
+        </div>
+        <br>
+        <div>
+            <label for="nr">Numero:</label>
+            <input type="text" id="nr" name="nr">
+        </div>
+        <br>
+        <div>
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" name="bairro">
+        </div>
+        <br>
+        <div>
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade">
+        </div>
+        <br>
+        <div>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone">
+        </div>
+        <br>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <br>
+        <input type="submit" value="Cadastrar Fornecedor">
+    </form>
+</body>
+</html>

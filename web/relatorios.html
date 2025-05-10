@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Relatórios - Sistema Rosbea</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <style>
+            /* Todos os estilos originais permanecem exatamente iguais */
+            :root {
+                --primary-color: #2c3e50;
+                --secondary-color: #3498db;
+                --accent-color: #e74c3c;
+                --light-color: #ecf0f1;
+                --dark-color: #2c3e50;
+                --text-light: #ffffff;
+                --text-dark: #333333;
+                --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+                --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+                --transition: all 0.3s ease;
+                --border-radius: 8px;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: 'Roboto', sans-serif;
+                background-color: #f5f7fa;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            header {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                color: var(--text-light);
+                padding: 1.5rem 2rem;
+                text-align: center;
+                box-shadow: var(--shadow-md);
+                position: relative;
+            }
+
+            /* Adicionei apenas este novo estilo para o botão Voltar */
+            .back-button {
+                position: absolute;
+                left: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(255,255,255,0.2);
+                color: white;
+                padding: 8px 15px;
+                border-radius: 20px;
+                text-decoration: none;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                transition: var(--transition);
+            }
+            
+            .back-button:hover {
+                background-color: rgba(255,255,255,0.3);
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+                font-weight: 500;
+                margin: 0.5rem 0;
+            }
+
+            main {
+                flex: 1;
+                padding: 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            .welcome-message {
+                font-size: 1.5rem;
+                color: var(--dark-color);
+                margin-bottom: 2rem;
+                font-weight: 400;
+                text-align: center;
+            }
+
+            .button-row {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .menu-btn {
+                background-color: white;
+                color: var(--dark-color);
+                padding: 1.5rem;
+                border-radius: var(--border-radius);
+                text-decoration: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.8rem;
+                transition: var(--transition);
+                box-shadow: var(--shadow-sm);
+                border-top: 4px solid var(--secondary-color);
+                text-align: center;
+                height: 100%;
+            }
+
+            .menu-btn:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-md);
+                background-color: var(--light-color);
+            }
+
+            .menu-btn i {
+                font-size: 2.5rem;
+                color: var(--secondary-color);
+            }
+
+            .menu-btn span {
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+
+            .sales-btn {
+                border-top-color: #2ecc71;
+            }
+
+            .sales-btn i {
+                color: #2ecc71;
+            }
+
+            .resellers-btn {
+                border-top-color: #9b59b6;
+            }
+
+            .resellers-btn i {
+                color: #9b59b6;
+            }
+
+            footer {
+                background-color: var(--dark-color);
+                color: var(--text-light);
+                text-align: center;
+                padding: 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            footer p {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            @media (max-width: 768px) {
+                header {
+                    padding: 1rem;
+                }
+
+                .button-row {
+                    grid-template-columns: 1fr;
+                }
+                
+                /* Estilo responsivo para o botão Voltar */
+                .back-button {
+                    position: static;
+                    transform: none;
+                    margin-bottom: 10px;
+                    display: inline-flex;
+                    width: auto;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <!-- Adicionei apenas esta linha com o botão Voltar -->
+            <a href="index.jsp" class="back-button"><i class="fas fa-arrow-left"></i> Voltar</a>
+            <h1><i class="fas fa-chart-line"></i> Relatórios</h1>
+        </header>
+
+        <main>
+            <h2 class="welcome-message">Selecione o tipo de relatório</h2>
+            
+            <div class="button-row">
+                <a href="filtrar_vendas_periodo.html" class="menu-btn sales-btn">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Vendas por Período</span>
+                    <small>Relatório de vendas filtradas por data</small>
+                </a>
+                
+                <a href="relatorio_vendas.jsp" class="menu-btn resellers-btn">
+                    <i class="fas fa-store"></i>
+                    <span>Relatoio de Vendas</span>
+                    <small>Relatório de Vendas</small>
+                </a>
+                
+                <a href="relatorio_revendedores_mes.jsp" class="menu-btn resellers-btn">
+                    <i class="fas fa-store"></i>
+                    <span>Pontos de Venda</span>
+                    <small>Relatório de revendedores e desempenho</small>
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <p><i class="fas fa-quote-left"></i> Dados precisos geram decisões acertadas. <i class="fas fa-quote-right"></i></p>
+        </footer>
+    </body>
+</html>

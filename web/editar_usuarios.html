@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuário</title>
+    <link rel="stylesheet" href="estilo_formulario.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Usuário</h1>
+        <form id="formEditarUsuario">
+            <div class="form-group">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" value="" readonly>
+                <small>Este campo é apenas para visualização.</small>
+            </div>
+            <div class="form-group">
+                <label for="nome_usuario">Nome de Usuário:</label>
+                <input type="text" id="nome_usuario" name="nome_usuario" value="" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Nova Senha:</label>
+                <input type="password" id="senha" name="senha">
+                <small>Deixe em branco para manter a senha atual.</small>
+            </div>
+            <div class="form-group">
+                <label for="permissao_acesso">Permissão de Acesso:</label>
+                <select id="permissao_acesso" name="permissao_acesso">
+                    <option value="admin">Administrador</option>
+                    <option value="editor">Gerente</option>
+                    <option value="visualizador">Digitador</option>
+                    <option value="visualizador">Visitante</option>
+                    </select>
+            </div>
+            <div class="form-buttons">
+                <button type="submit">Salvar Alterações</button>
+                <button type="button" onclick="window.location.href='lista_usuarios.html'">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Função para popular o formulário com os dados do usuário a ser editado
+        function popularFormulario(usuario) {
+            document.getElementById('id').value = usuario.id;
+            document.getElementById('nome_usuario').value = usuario.nome_usuario;
+            document.getElementById('permissao_acesso').value = usuario.permissao_acesso;
+            // Não preenchemos o campo de senha por segurança
+        }
+
+        // Exemplo de como você poderia obter os dados do usuário (isso dependerá do seu backend)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Suponha que você tenha um jeito de obter o ID do usuário a ser editado,
+            // talvez através de um parâmetro na URL ou de alguma outra forma.
+            const usuarioIdParaEditar = obterIdDoUsuario(); // Função que você precisará implementar
+
+            if (usuarioIdParaEditar) {
+                // Aqui você faria uma chamada AJAX para o seu backend (PHP)
+                // para buscar os dados do usuário com o ID 'usuarioIdParaEditar'.
+                // Exemplo simplificado (você precisará adaptar):
+                fetch(`/api/usuarios/${usuarioIdParaEditar}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            popularFormulario(data);
+                        } else {
+                            alert('Usuário não encontrado.');
+                            window.location.href = 'lista_usuarios.html';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar dados do usuário:', error);
+                        alert('Ocorreu um erro ao buscar os dados do usuário.');
+                    });
+            } else {
+                alert('ID do usuário não especificado.');
+                window.location.href = 'lista_usuarios.html';
+            }
+        });
+
+        function obterIdDoUsuario() {
+            // Esta é uma função de exemplo. A forma real de obter o ID
+            // dependerá de como você está implementando a listagem e a edição.
+            // Uma forma comum é passar o ID como um parâmetro na URL:
+            // Ex: editar_usuario.html?id=123
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        document.getElementById('formEditarUsuario').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const formData = new FormData(this);
+
+            // Aqui você faria uma chamada AJAX para o seu backend (PHP)
+            // para enviar os dados atualizados do usuário.
+            fetch('/api/usuarios/atualizar', {
+                method: 'POST', // Ou PUT, dependendo da sua API
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Usuário atualizado com sucesso!');
+                    window.location.href = 'lista_usuarios.html'; // Redireciona para a lista
+                } else {
+                    alert('Erro ao atualizar o usuário: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar dados para atualização:', error);
+                alert('Ocorreu um erro ao atualizar o usuário.');
+            });
+        });
+    </script>
+</body>
+</html>

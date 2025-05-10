@@ -1,0 +1,50 @@
+* {
+    margin: 0 auto
+}
+header{
+    width: 90%;
+    background-color: #e6faff;
+    padding: 10px
+}
+nav {
+    width: 90%;
+    background-color: #ffe0cc;
+    padding: 10px;
+    display: flex;
+    align-items: center
+}
+nav a{
+    color: blue;
+    text-decoration: none
+}
+nav a:hover{
+    color: red
+}
+main {
+    width: 90%;
+    height: 700px;
+    padding: 10px;
+    background-color: whitesmoke
+}
+footer{
+    padding: 100px;
+    color: #003300;
+    align-items: center
+
+}
+iframe{
+    border: 0px;
+    height: 500px;
+    width: 100%
+        
+}.fas {
+
+}
+
+.nomeProdutoAutocomplete {
+
+}
+
+.fa-shopping-cart {
+
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .search-form {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .options-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .options-group > div {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Controle de Estoque</h1>
+        <div class="search-form">
+            <form action="estoque.jsp" method="get">
+                <div class="options-group">
+                    <div class="form-group">
+                        <label for="tipo_busca">Tipo de Busca:</label>
+                        <select id="tipo_busca" name="tipo_busca">
+                            <option value="todos">Todos os Produtos</option>
+                            <option value="codigo">Por Código</option>
+                            <option value="nome">Por Nome</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ordenacao">Ordenar por:</label>
+                        <select id="ordenacao" name="ordenacao">
+                            <option value="nome">Nome do Produto</option>
+                            <option value="saldo_asc">Saldo (Crescente)</option>
+                            <option value="saldo_desc">Saldo (Decrescente)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="termo-busca-group">
+                    <label for="termo_busca">Termo de Busca:</label>
+                    <input type="text" id="termo_busca" name="termo_busca" 
+                           placeholder="Digite o código ou nome do produto">
+                </div>
+                
+                <input type="submit" value="Pesquisar">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar/ocultar campo de busca conforme seleção
+        document.getElementById('tipo_busca').addEventListener('change', function() {
+            const termoGroup = document.getElementById('termo-busca-group');
+            termoGroup.style.display = this.value === 'todos' ? 'none' : 'block';
+        });
+        
+        // Inicializar estado
+        document.getElementById('tipo_busca').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>

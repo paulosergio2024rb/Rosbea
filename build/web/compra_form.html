@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Compra</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: var(--dark-gray);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #23272b;
+        }
+        
+        .back-btn i {
+            margin-right: 5px;
+        }
+        
+        .form-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 28px;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            font-size: 20px;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .form-control {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            table-layout: fixed;
+        }
+        
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: var(--light-gray);
+            font-weight: 600;
+            color: var(--dark-gray);
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+        
+        tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .btn i {
+            margin-right: 6px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .info-produto {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .total-row {
+            font-weight: 600;
+            background-color: var(--light-gray);
+        }
+        
+        .total-row td {
+            padding: 15px;
+        }
+        
+        .number-input {
+            text-align: right;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .currency {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        /* Larguras específicas para as colunas */
+        .col-produto { width: 30%; }
+        .col-quantidade { width: 10%; }
+        .col-preco { width: 15%; }
+        .col-preco-dolar { width: 15%; }
+        .col-preco-dolar-real { width: 10%; }
+        .col-total { width: 10%; }
+        .col-acoes { width: 10%; }
+        
+        @media (max-width: 1200px) {
+            .form-container {
+                padding: 15px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-control {
+                min-width: 100%;
+            }
+            
+            /* Esconder coluna de preço dólar/real em mobile */
+            .col-preco-dolar-real {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="header">
+            <h1><i class="fas fa-shopping-cart"></i> Formulário de Compra</h1>
+            <a href="gerenciar_pedidos.html" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+        </div>
+
+        <form id="form-compra" action="processa_compra.jsp" method="post">
+            <div class="form-group">
+                <div class="form-control">
+                    <label for="fornecedor">Fornecedor:</label>
+                    <select id="fornecedor" name="fornecedor" required>
+                        <option value="">Carregando fornecedores...</option>
+                    </select>
+                </div>
+                
+                <div class="form-control">
+                    <label for="data_pedido">Data do Pedido:</label>
+                    <input type="date" id="data_pedido" name="data_pedido" required>
+                </div>
+                
+                <div class="form-control">
+                    <label for="cotacao_dolar">Cotação do Dólar:</label>
+                    <input type="number" id="cotacao_dolar" name="cotacao_dolar" step="0.0001" min="0" value="5.00">
+                </div>
+            </div>
+
+            <h2><i class="fas fa-boxes"></i> Itens da Compra</h2>
+
+            <div class="table-responsive">
+                <table id="itens-table">
+                    <thead>
+                        <tr>
+                            <th class="col-produto">Produto</th>
+                            <th class="col-quantidade">Qtd</th>
+                            <th class="col-preco">Preço Unit.</th>
+                            <th class="col-preco-dolar">Preço $</th>
+                            <th class="col-preco-dolar-real">$/R$</th>
+                            <th class="col-total">Total</th>
+                            <th class="col-acoes">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-produto">
+                                <select name="produto[]" class="produto-select" required>
+                                    <option value="">Carregando produtos...</option>
+                                </select>
+                                <div class="info-produto"></div>
+                            </td>
+                            <td class="col-quantidade"><input type="number" name="quantidade_compra[]" class="quantidade number-input" min="1" value="1" required></td>
+                            <td class="col-preco"><input type="number" name="preco[]" class="preco number-input" step="0.01" min="0" required></td>
+                            <td class="col-preco-dolar"><input type="number" name="preco_dolar[]" class="preco-dolar number-input" step="0.01" min="0"></td>
+                            <td class="col-preco-dolar-real"><input type="number" name="preco_dolar_real[]" class="preco-dolar-real number-input" step="0.01" min="0" readonly></td>
+                            <td class="col-total total-item currency">R$ 0,00</td>
+                            <td class="col-acoes"><button type="button" class="btn btn-danger btn-sm remover-item"><i class="fas fa-trash-alt"></i></button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="5" style="text-align: right;"><strong>Total Geral:</strong></td>
+                            <td id="total-geral" class="currency">R$ 0,00</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" id="btn-adicionar" class="btn btn-primary"><i class="fas fa-plus"></i> Adicionar Item</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Finalizar Compra</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Função para formatar moeda
+        function formatarMoeda(valor, moeda = 'R$') {
+            return moeda + ' ' + parseFloat(valor).toFixed(2).replace('.', ',');
+        }
+
+        // Função para calcular totais
+        function calcularTotais() {
+            let totalGeral = 0;
+            const cotacaoDolar = parseFloat(document.getElementById('cotacao_dolar').value) || 1;
+
+            document.querySelectorAll('#itens-table tbody tr').forEach(row => {
+                const quantidade = parseFloat(row.querySelector('.quantidade').value) || 0;
+                const preco = parseFloat(row.querySelector('.preco').value) || 0;
+                const precoDolar = parseFloat(row.querySelector('.preco-dolar').value) || 0;
+
+                // Calcular preço dólar/real
+                const precoDolarReal = precoDolar * cotacaoDolar;
+                row.querySelector('.preco-dolar-real').value = precoDolarReal.toFixed(4);
+
+                // Calcular total do item (quantidade × preço unitário)
+                const totalItem = quantidade * preco;
+                row.querySelector('.total-item').textContent = formatarMoeda(totalItem);
+
+                totalGeral += totalItem;
+            });
+
+            document.getElementById('total-geral').textContent = formatarMoeda(totalGeral);
+        }
+
+        // Função para carregar fornecedores
+        function carregarFornecedores() {
+            const select = document.getElementById('fornecedor');
+            select.innerHTML = '<option value="">Carregando fornecedores...</option>';
+            select.disabled = true;
+
+            fetch('busca_fornecedores.jsp')
+                .then(response => {
+                    if (!response.ok) throw new Error('Erro ao carregar fornecedores');
+                    return response.json();
+                })
+                .then(fornecedores => {
+                    select.innerHTML = '<option value="">Selecione um fornecedor</option>';
+
+                    if (fornecedores && fornecedores.length > 0) {
+                        fornecedores.forEach(fornecedor => {
+                            const option = document.createElement('option');
+                            option.value = fornecedor.id || fornecedor.fornecedor;
+                            option.textContent = `${fornecedor.fornecedor || 'Fornecedor sem nome'} - ${fornecedor.cidade || ''}`;
+                            option.dataset.endereco = `${fornecedor.endereco || ''}, ${fornecedor.nr || ''} - ${fornecedor.bairro || ''}`;
+                            option.dataset.telefone = fornecedor.telefone || '';
+                            option.dataset.email = fornecedor.email || '';
+                            select.appendChild(option);
+                        });
+                    } else {
+                        select.innerHTML = '<option value="">Nenhum fornecedor encontrado</option>';
+                    }
+
+                    select.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    select.innerHTML = '<option value="">Erro ao carregar fornecedores</option>';
+                });
+        }
+
+        // Função para carregar produtos
+        function carregarProdutos(selectElement) {
+            const row = selectElement.closest('tr');
+            const infoDiv = row.querySelector('.info-produto');
+
+            selectElement.innerHTML = '<option value="">Carregando produtos...</option>';
+            selectElement.disabled = true;
+            infoDiv.textContent = '';
+
+            fetch('busca_produtos.jsp')
+                .then(response => {
+                    if (!response.ok) throw new Error('Erro ao carregar produtos');
+                    return response.json();
+                })
+                .then(produtos => {
+                    selectElement.innerHTML = '<option value="">Selecione um produto</option>';
+
+                    if (produtos && produtos.length > 0) {
+                        produtos.forEach(produto => {
+                            const option = document.createElement('option');
+                            option.value = produto.id || produto.codigo;
+                            option.textContent = `${produto.nome || 'Produto sem nome'} (${produto.marca || 'Sem marca'})`;
+
+                            option.dataset.preco = produto.preco_custo || produto.preco || '0';
+                            option.dataset.marca = produto.marca || '';
+                            option.dataset.preco_dolar = produto.preco_dolar || '0';
+
+                            selectElement.appendChild(option);
+                        });
+                    } else {
+                        selectElement.innerHTML = '<option value="">Nenhum produto encontrado</option>';
+                    }
+
+                    selectElement.disabled = false;
+
+                    // Adicionar evento para preencher automaticamente os campos
+                    selectElement.addEventListener('change', function() {
+                        const selectedOption = this.selectedOptions[0];
+                        if (selectedOption && selectedOption.dataset) {
+                            row.querySelector('.preco').value = selectedOption.dataset.preco || '0';
+                            row.querySelector('.preco-dolar').value = selectedOption.dataset.preco_dolar || '0';
+
+                            const infoDiv = row.querySelector('.info-produto');
+                            infoDiv.innerHTML = selectedOption.dataset.marca ? 
+                                `<strong>Marca:</strong> ${selectedOption.dataset.marca}` : '';
+
+                            calcularTotais();
+                        } else {
+                            infoDiv.textContent = '';
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    selectElement.innerHTML = '<option value="">Erro ao carregar produtos</option>';
+                    infoDiv.textContent = 'Não foi possível carregar os produtos';
+                });
+        }
+
+        // Função para remover item da tabela
+        function removerItem(event) {
+            const row = event.target.closest('tr');
+            row.remove();
+            calcularTotais();
+        }
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Definir data atual como padrão
+            document.getElementById('data_pedido').valueAsDate = new Date();
+            
+            // Carregar dados iniciais
+            carregarFornecedores();
+            document.querySelectorAll('.produto-select').forEach(select => {
+                carregarProdutos(select);
+            });
+            
+            // Adicionar evento para o botão de adicionar item
+            document.getElementById('btn-adicionar').addEventListener('click', function() {
+                const tbody = document.querySelector('#itens-table tbody');
+                const newRow = document.createElement('tr');
+    
+                newRow.innerHTML = `
+                    <td class="col-produto">
+                        <select name="produto[]" class="produto-select" required>
+                            <option value="">Carregando produtos...</option>
+                        </select>
+                        <div class="info-produto"></div>
+                    </td>
+                    <td class="col-quantidade"><input type="number" name="quantidade_compra[]" class="quantidade number-input" min="1" value="1" required></td>
+                    <td class="col-preco"><input type="number" name="preco[]" class="preco number-input" step="0.01" min="0" required></td>
+                    <td class="col-preco-dolar"><input type="number" name="preco_dolar[]" class="preco-dolar number-input" step="0.01" min="0"></td>
+                    <td class="col-preco-dolar-real"><input type="number" name="preco_dolar_real[]" class="preco-dolar-real number-input" step="0.01" min="0" readonly></td>
+                    <td class="col-total total-item currency">R$ 0,00</td>
+                    <td class="col-acoes"><button type="button" class="btn btn-danger btn-sm remover-item"><i class="fas fa-trash-alt"></i></button></td>
+                `;
+    
+                tbody.appendChild(newRow);
+    
+                // Carregar produtos para o novo item
+                carregarProdutos(newRow.querySelector('.produto-select'));
+                
+                // Adicionar evento para remover o item
+                newRow.querySelector('.remover-item').addEventListener('click', removerItem);
+            });
+
+            // Adicionar evento para remover itens
+            document.querySelectorAll('.remover-item').forEach(btn => {
+                btn.addEventListener('click', removerItem);
+            });
+
+            // Adicionar eventos para calcular totais quando valores mudam
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('quantidade') || 
+                    e.target.classList.contains('preco') || 
+                    e.target.classList.contains('preco-dolar') ||
+                    e.target.id === 'cotacao_dolar') {
+                    calcularTotais();
+                }
+            });
+
+            // Calcular totais iniciais
+            calcularTotais();
+        });
+    </script>
+</body>
+</html>
