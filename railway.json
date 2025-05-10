@@ -1,0 +1,11 @@
+{
+  "builds": [
+    {
+      "src": "dist/Rosbea.war",
+      "use": "@railway/java"
+    }
+  ],
+  "deploy": {
+    "startCommand": "java -jar webapp-runner.jar --port $PORT dist/Rosbea.war"
+  }
+}
